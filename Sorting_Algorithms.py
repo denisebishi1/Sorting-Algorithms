@@ -3,7 +3,8 @@ import random as rd
 import time
 
 # global variables
-k = 10000  # elements to sort
+k = 2000
+ # elements to sort
 
 
 # used for bubble merge and insert average case
@@ -80,27 +81,35 @@ def merge(left, right, merged):
 # Quick Sort
 def partition(array, begin, end):
     pivot_idx = begin
-    for i in range(begin + 1, end + 1):
-        if array[i] <= array[begin]:
-            pivot_idx += 1
-            array[i], array[pivot_idx] = array[pivot_idx], array[i]
-    array[pivot_idx], array[begin] = array[begin], array[pivot_idx]
-    return pivot_idx
-
+    pivot = array[pivot_idx]
+    
+    while begin < end:
+        for i in range(begin - 1, end + 1):
+            if array[begin] < range(array) and array[begin]<= pivot:
+                begin += 1
+            while array[end] > pivot:
+                end -= 1
+                
+                if(begin < end):
+                    array[begin],array[end] = array[end], array[begin]
+                    
+                    array[end],array[pivot_idx] = array[pivot_idx], array[end]
+                    return end
+                    
 
 def quick_sort_recursion(array, begin, end):
-    if begin >= end:
+    if begin  < end:
         return
-    pivot_idx = partition(array, begin, end)
-    quick_sort_recursion(array, begin, pivot_idx - 1)
-    quick_sort_recursion(array, pivot_idx + 1, end)
+    p = partition(array, begin, end)
+    quick_sort_recursion(array, begin, p - 1)
+    quick_sort_recursion(array, p + 1, end)
 
 
 def quick_sort(array, begin=0, end=None):
     if end is None:
         end = len(array) - 1
 
-    return quick_sort_recursion(array, begin, end)
+    return array
 
 
 # Bubble Sort
@@ -206,6 +215,15 @@ def get_avg_insertion(list):
     avg = sum_num / 100
     return avg
 
+# Runs quick sort 100 times and gets the average time
+def get_avg_quick(list):
+    sum_num = 0.00
+    for i in range(100):
+        num = get_quick_time(list)
+        sum_num = sum_num + num
+    avg = sum_num / 100
+    return avg
+
 
 # Main Function
 if __name__ == '__main__':
@@ -217,7 +235,7 @@ if __name__ == '__main__':
     print("Bubble Sort best case: ", get_avg_bubble(sort_ls), " seconds to sort a list with ", k, " items.")
     print("Bubble Sort average case: ", get_avg_bubble(random_ls), " seconds to sort a list with ", k, " items.")
     print("Bubble Sort worst case: ", get_avg_bubble(reverse_ls), " seconds to sort a list with ", k, " items.")
-
+    
     random_ls = create_random_list(k)
     sort_ls = create_sorted_list(k)
     reverse_ls = create_reverse_list(k)
@@ -233,3 +251,10 @@ if __name__ == '__main__':
     print("Insertion Sort worst case: ", get_avg_insertion(reverse_ls), " seconds to sort a list with ", k, " items.")
 
     # quick_time(random_ls)
+    random_ls = create_random_list(k)
+    sort_ls = create_sorted_list(k)
+    reverse_ls = create_reverse_list(k)
+    print("Quick Sort best case: ", get_avg_quick(reverse_ls), " seconds to sort a list with ", k, " items.")
+    print("Quick Sort average case: ", get_avg_quick(random_ls), " seconds to sort a list with ", k, " items.")
+    print("Quick Sort worst case: ", get_avg_quick(sort_ls), " seconds to sort a list with ", k, " items.")
+    
